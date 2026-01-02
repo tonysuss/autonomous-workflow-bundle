@@ -1,11 +1,11 @@
-# Autonomous Workflow Bundle
+# Autonomous Claude Workflow Bundle
 
 <p align="center">
-  <img src="assets/cover.svg" alt="Autonomous Workflow Bundle" width="800">
+  <img src="assets/cover.svg" alt="Autonomous Claude Workflow Bundle" width="800">
 </p>
 
 <p align="center">
-  <strong>Portable Claude Code configuration for autonomous PRD-to-implementation workflows</strong>
+  <strong>High-quality, long-running autonomous workflows that run 24/7 until completion</strong>
 </p>
 
 <p align="center">
@@ -17,7 +17,15 @@
 
 ---
 
-A complete `.claude` configuration bundle that transforms Claude Code into an autonomous software development agent. Drop it into any project to enable PRD-driven workflows with built-in security gates, quality checks, and stage-based orchestration.
+A complete `.claude` configuration bundle that transforms Claude Code into a **fully autonomous software development agent**. Drop it into any project to enable **continuous, unattended PRD-to-implementation workflows** that run around the clock with built-in security gates, quality checks, and multi-stage orchestration.
+
+## Why Autonomous Claude Workflow Bundle?
+
+- **🔄 True 24/7 Autonomy** - Start a workflow and let it run continuously until completion (or token limits). No manual intervention required.
+- **🏗️ Production-Grade Quality** - Multi-stage validation with security audits, legal reviews, automated testing, and code quality gates at every step.
+- **🛡️ Built-in Safety** - Automatic checkpointing, rollback capabilities, and file protection ensure safe, resumable execution.
+- **📊 Long-Running Workflows** - Designed for complex, multi-day projects with persistent state management and progress tracking.
+- **🎯 PRD-Driven Development** - Feed in requirements, get production-ready code with complete documentation and tests.
 
 ## Installation
 
