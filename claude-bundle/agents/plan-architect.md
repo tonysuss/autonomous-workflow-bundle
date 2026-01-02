@@ -97,3 +97,4 @@ Query Context7 for library documentation:
 - Dependencies must form a DAG (no cycles)
 - File paths must follow project conventions
 - API specs must be complete and consistent
+- Keep `.claude` paths reserved for workflow state/config; all generated project files belong outside that directory.

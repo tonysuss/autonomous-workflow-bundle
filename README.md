@@ -144,12 +144,13 @@ See the [Setup](#setup) section for configuration details.
 2. Adjust `.claude/settings.local.json` for permissions/MCP servers as needed.
 3. Start a workflow: `workflow start <path-to-prd>`. This initializes state at `prd_analysis`.
 4. Check status: `workflow status`. Resume: `workflow resume`. Stage transitions occur on agent completions via `subagent-result-processor.py`.
-5. Fully autonomous loop (optional): `/ralph-loop Start autonomous workflow with PRD at <path>` if you have the `ralph-wiggum` plugin enabled.
+5. Fully autonomous loop (optional): `/ralph-loop Start autonomous workflow with PRD at <path>` if you have the `ralph-wiggum` plugin enabled. The hook extracts the path that follows `PRD at` and forwards it to `workflow start`.
 
 ## Artifacts produced
 During workflow execution, the following files are created in your project's `.claude/`:
 - `requirements.json` — parsed PRD with features and acceptance criteria (after PRD Analysis)
 - `implementation-plan.json` — task graph with file structure and dependencies (after Plan Generation)
+- `validation-report.json` — test results and acceptance criteria pass/fail status (after Testing)
 - `workflow-state.json` — current stage, progress, and agent results (updated continuously)
 - `checkpoints/` — session checkpoints for resuming interrupted workflows
 
@@ -157,6 +158,7 @@ During workflow execution, the following files are created in your project's `.c
 - No active workflow is included; state is reset.
 - If plugins/MCP servers aren't available on the target machine, disable the entries in `settings.local.json`/`settings.json` and proceed without them.
 - Security/legal gate: Stage 3 only advances after both `security-auditor` and `legal-reviewer` succeed.
+- Project files are generated in your project root (outside `.claude`). The bundle guards against writing application code into `.claude`, which is reserved for workflow state and settings.
 
 ## Troubleshooting
 

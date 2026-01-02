@@ -17,7 +17,7 @@
     ],
     "UserPromptSubmit": [
       {
-        "matcher": "workflow|start|status|resume",
+        "matcher": "workflow|start|status|resume|ralph",
         "hooks": [
           {
             "type": "command",

@@ -101,7 +101,7 @@ For fully autonomous execution, use:
 /ralph-loop Start autonomous workflow with PRD at <path>
 ```
 
-This runs the workflow in a continuous loop until completion or escalation.
+This runs the workflow in a continuous loop until completion or escalation. The hook pulls the PRD path from the text after `PRD at` and hands it to `workflow start` so the loop begins at Stage 1.
 
 ## Skill Integration
 
