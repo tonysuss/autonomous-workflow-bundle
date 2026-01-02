@@ -55,7 +55,6 @@ Adjust `.claude/settings.local.json` to set permissions and MCP server preferenc
 # Review and modify allowlists, MCP servers, and other local settings
 nano .claude/settings.local.json
 ```
-```
 
 ## Contents
 - `claude-bundle/agents` — stage playbooks
