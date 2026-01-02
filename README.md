@@ -29,6 +29,34 @@ git clone https://github.com/YOUR_USERNAME/autonomous-workflow-bundle.git
 cp -r autonomous-workflow-bundle/claude-bundle /path/to/your/project/.claude
 ```
 
+## Setup
+
+After installation, configure the bundle for your environment:
+
+### 1. Environment Variables
+
+The bundle includes environment variable support in `settings.json`. To set up your API keys:
+
+Edit `.claude/settings.json` and replace placeholder values:
+
+```json
+{
+  "env": {
+    "GEMINI_API_KEY": "your_actual_gemini_api_key_here"
+  }
+}
+```
+
+### 2. Configure Permissions
+
+Adjust `.claude/settings.local.json` to set permissions and MCP server preferences:
+
+```bash
+# Review and modify allowlists, MCP servers, and other local settings
+nano .claude/settings.local.json
+```
+```
+
 ## Contents
 - `claude-bundle/agents` — stage playbooks
 - `claude-bundle/hooks` — routing/commands/validation/checkpoints
@@ -39,28 +67,70 @@ cp -r autonomous-workflow-bundle/claude-bundle /path/to/your/project/.claude
 - `claude-bundle/checkpoints/.gitkeep` — keeps the folder when zipped
 
 ## Workflow at a glance
-Stage flow: PRD Analysis → Plan Generation → Security/Legal → Implementation → Testing → Completion → Done  
-Agent mapping:
-- PRD Analysis: `prd-analyzer`
-- Plan Generation: `plan-architect`
-- Security/Legal: `security-auditor` + `legal-reviewer` (both must succeed before moving on)
-- Implementation: `code-implementer`, `asset-builder`
-- Testing: `test-runner-fixer`, `acceptance-validator`
-- Completion: `doc-writer`
 
-## Prereqs (not bundled)
-- Claude plugins enabled in the user environment: `context7`, `frontend-design`, `swift-lsp`, `pyright-lsp`, `typescript-lsp`, `ralph-wiggum`, `feature-dev`, `code-review`, `security-guidance`.
-- Optional MCP servers: `supabase` is enabled in `settings.local.json`; remove/disable if unavailable.
-- Tooling: node/npm (for format/test hooks), Python 3 (hooks), Xcode/xcodebuild for iOS flows, plus any stack-specific runtimes your project needs.
-- Env vars (optional):
-  - `CLAUDE_PROJECT_DIR` if the bundle isn’t placed at project root.
-  - `GEMINI_API_KEY` to enable `gemini-imagegen`.
-  - Any MCP server auth vars (e.g., Supabase) if you keep those enabled.
+<p align="center">
+  <img src="assets/workflow-diagram.png" alt="Workflow Diagram" width="100%">
+</p>
 
-Skill → plugin hints (enable the plugin if you need the capability):
-- `workflow-orchestrator`, `implementation-executor`, `validation-testing`: benefit from `context7` docs lookup
-- `frontend-design`, `web-artifacts-builder`, `webapp-testing`: benefit from `frontend-design`/web tooling
-- `ios-simulator-skill`: needs Xcode; `swift-lsp` helps for Swift projects
+The workflow progresses through 7 stages with specific agents handling each phase:
+
+| Stage | Agents | Purpose |
+|-------|--------|---------|
+| 1. PRD Analysis | `prd-analyzer` | Parse requirements and extract features |
+| 2. Plan Generation | `plan-architect` | Create implementation plan and task graph |
+| 3. Security/Legal Gate | `security-auditor`, `legal-reviewer` | Validate compliance (both must pass) |
+| 4. Implementation | `code-implementer`, `asset-builder` | Execute development tasks |
+| 5. Testing | `test-runner-fixer`, `acceptance-validator` | Verify functionality and requirements |
+| 6. Completion | `doc-writer` | Generate documentation |
+| 7. Done | — | Workflow complete |
+
+## Prerequisites
+
+### Required Claude Plugins
+
+These plugins should be enabled in your Claude environment:
+- `context7` - Documentation lookup
+- `frontend-design` - UI development support
+- `swift-lsp` - Swift language support (for iOS projects)
+- `pyright-lsp` - Python language support
+- `typescript-lsp` - TypeScript/JavaScript language support
+- `ralph-wiggum` - Autonomous workflow loops
+- `feature-dev` - Feature development assistance
+- `code-review` - Code quality checks
+- `security-guidance` - Security best practices
+
+Enable with: `claude plugins enable <plugin>@claude-plugins-official`
+
+### Optional MCP Servers
+
+- `supabase` - Enabled by default in `settings.local.json`; disable if not needed
+
+### System Requirements
+
+- **Node.js & npm** - For code formatting and test hooks
+- **Python 3.9+** - For workflow hooks and scripts
+- **Xcode** (macOS only) - For iOS simulator workflows
+- **Git** - For version control integration
+
+### Environment Variables
+
+| Variable | Required | Purpose | Default |
+|----------|----------|---------|---------|
+| `GEMINI_API_KEY` | Optional | Enable AI image generation with `gemini-imagegen` skill | - |
+| `CLAUDE_PROJECT_DIR` | Optional | Override project directory location | Current directory |
+| MCP server vars | Optional | Authentication for enabled MCP servers (e.g., Supabase) | - |
+
+See the [Setup](#setup) section for configuration details.
+
+### Skill Dependencies
+
+| Skill | Requires | Purpose |
+|-------|----------|---------|
+| `workflow-orchestrator` | `context7` | Documentation lookup during workflow stages |
+| `frontend-design` | `frontend-design` plugin | Production-grade UI development |
+| `ios-simulator-skill` | Xcode, `swift-lsp` | iOS app testing and automation |
+| `gemini-imagegen` | `GEMINI_API_KEY` | AI image generation and editing |
+| `webapp-testing` | Node.js, Playwright | Web application testing |
 
 ## Usage
 1. Copy `claude-bundle` to your project root as `.claude` (see Installation above).
@@ -82,6 +152,20 @@ During workflow execution, the following files are created in your project's `.c
 - Security/legal gate: Stage 3 only advances after both `security-auditor` and `legal-reviewer` succeed.
 
 ## Troubleshooting
+
 - **Command not found / missing plugin**: Enable it with `claude plugins enable <plugin>@claude-plugins-official`, or disable in `settings.local.json`.
 - **Stuck stage**: Ensure the corresponding agent completed successfully; stage advances only on `subagent-result-processor.py` success.
 - **Permissions prompt**: Tighten or relax `settings.local.json` allowlist as needed.
+
+## Acknowledgments
+
+Built for [Claude Code](https://claude.com/claude-code) by Anthropic.
+
+Bundled skills include:
+- `ios-simulator-skill` - iOS app testing and automation
+- `webapp-testing` - Playwright-based web testing
+- `frontend-design` - Production-grade UI development
+- `web-artifacts-builder` - Complex artifact creation
+- `gemini-imagegen` - AI image generation via Google Gemini
+
+---
