@@ -53,6 +53,7 @@ is_allowed = any(pattern in file_path for pattern in allowed_patterns)
 if not is_planned and not is_allowed:
     output = {
         "hookSpecificOutput": {
+            "hookEventName": "PreToolUse",
             "permissionDecision": "ask",
             "permissionDecisionReason": f"File not in implementation plan: {os.path.basename(file_path)}"
         }

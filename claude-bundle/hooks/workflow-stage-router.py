@@ -54,6 +54,7 @@ suggested_agents = STAGE_AGENTS.get(detected_stage or current_stage, [])
 
 output = {
     "hookSpecificOutput": {
+        "hookEventName": "UserPromptSubmit",
         "currentStage": current_stage,
         "detectedStage": detected_stage,
         "suggestedAgents": suggested_agents

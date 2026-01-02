@@ -269,6 +269,7 @@ def main():
     if result:
         output = {
             "hookSpecificOutput": {
+                "hookEventName": "UserPromptSubmit",
                 "workflowCommand": result
             }
         }

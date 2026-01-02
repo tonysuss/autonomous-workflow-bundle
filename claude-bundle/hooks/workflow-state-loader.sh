@@ -17,7 +17,7 @@ if [ -f "$STATE_FILE" ]; then
     CONTEXT+="- State File: $STATE_FILE\n"
 
     # Output as JSON for Claude Code hook system
-    printf '{"hookSpecificOutput":{"additionalContext":"%s"}}' "$CONTEXT"
+    printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}' "$CONTEXT"
 else
-    printf '{"hookSpecificOutput":{"additionalContext":"No active workflow. Use workflow start <prd-path> to begin."}}'
+    printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"No active workflow. Use workflow start <prd-path> to begin."}}'
 fi
