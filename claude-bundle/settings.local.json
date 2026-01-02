@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(__NEW_LINE__ echo -e \"\\\\n=== Checking for subprocess/os.system calls ===\")",
+      "Bash(__NEW_LINE__ echo -e \"\\\\n=== Checking for file operations outside temp/project ===\")",
+      "Bash(__NEW_LINE__ echo -e \"\\\\n=== Checking for environment variable access ===\")",
+      "Bash(__NEW_LINE__ echo -e \"\\\\n=== Checking for credential/secret patterns ===\")",
+      "Bash(__NEW_LINE__ echo -e \"\\\\n=== Checking for base64/encoding \\(potential obfuscation\\) ===\")",
+      "Skill(ios-simulator-skill)",
+      "Bash(xcodebuild build:*)",
+      "Bash(chmod:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
+}

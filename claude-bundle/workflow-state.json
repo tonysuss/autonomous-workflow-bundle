@@ -1,0 +1,24 @@
+{
+  "workflow_id": null,
+  "prd_path": null,
+  "current_stage": null,
+  "stage_status": {
+    "prd_analysis": "pending",
+    "plan_generation": "pending",
+    "security_legal_review": "pending",
+    "implementation": "pending",
+    "testing": "pending",
+    "completion": "pending"
+  },
+  "progress_percent": 0,
+  "current_task": null,
+  "last_activity": null,
+  "files_created": [],
+  "files_modified": [],
+  "agent_results": {},
+  "stage_transitions": [],
+  "blockers": [],
+  "escalations": [],
+  "last_checkpoint": null,
+  "can_resume": false
+}

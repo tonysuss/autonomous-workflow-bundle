@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets (never commit these)
+.env.local
+.env.*.local
+*.key
+*.pem
+credentials.json
+secrets.json
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+
+# Logs
+*.log
+logs/
+
+# Workflow artifacts (optional - uncomment to exclude)
+# .claude/checkpoints/*
+# !.claude/checkpoints/.gitkeep
+
+# Xcode
+*.xcuserstate
+xcuserdata/
+DerivedData/
+
+# Test artifacts
+coverage/
+.nyc_output/
+htmlcov/
+.pytest_cache/
