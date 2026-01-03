@@ -75,13 +75,12 @@ When `.claude/implementation-plan.json` is created with task graph.
 
 ### Stage 3 → Stage 4
 When security-auditor AND legal-reviewer both approve.
-**Human checkpoint**: Plan approval required before proceeding.
 
 ### Stage 4 → Stage 5
-When all planned files are created and build passes.
+When 80% of planned files are created or modified (normalized path matching).
 
 ### Stage 5 → Stage 6
-When 80% test coverage and all P0 criteria pass.
+When both test-runner-fixer AND acceptance-validator succeed, validation-report.json exists, all tests pass, and 80% coverage threshold is met.
 
 ### Stage 6 → Done
 When documentation is complete.

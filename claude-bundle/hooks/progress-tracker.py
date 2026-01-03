@@ -73,7 +73,7 @@ if os.path.exists(requirements_file):
 if os.path.exists(plan_file):
     state["stage_status"]["plan_generation"] = "completed"
 
-# Calculate progress if plan exists
+# Calculate progress if plan exists (match gate logic: normalized path matching)
 if os.path.exists(plan_file):
     try:
         with open(plan_file) as f:
@@ -81,9 +81,33 @@ if os.path.exists(plan_file):
         file_structure = plan.get("file_structure", {})
         planned_files = file_structure.get("files", [])
         if planned_files:
-            created_count = len(state.get("files_created", []))
-            total_count = len(planned_files)
-            state["progress_percent"] = min(100, int(created_count / total_count * 100))
+            # Extract and normalize planned paths (same logic as stage_gates.py)
+            planned_paths = set()
+            for f in planned_files:
+                if isinstance(f, dict):
+                    path = f.get("path", "")
+                else:
+                    path = str(f)
+                if path:
+                    planned_paths.add(os.path.normpath(os.path.expanduser(os.path.expandvars(path))))
+
+            if planned_paths:
+                # Normalize touched files
+                created = state.get("files_created", [])
+                modified = state.get("files_modified", [])
+                touched_normalized = set()
+                for f in created + modified:
+                    touched_normalized.add(os.path.normpath(os.path.expanduser(os.path.expandvars(f))))
+
+                # Count matched planned files (same logic as gate)
+                matched = 0
+                for planned in planned_paths:
+                    for touched in touched_normalized:
+                        if touched == planned or touched.endswith(os.sep + planned):
+                            matched += 1
+                            break
+
+                state["progress_percent"] = min(100, int(matched / len(planned_paths) * 100))
     except Exception:
         pass
 

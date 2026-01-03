@@ -16,8 +16,10 @@ if [ -f "$STATE_FILE" ]; then
     CONTEXT+="- Current Task: $TASK\n"
     CONTEXT+="- State File: $STATE_FILE\n"
 
+    # Escape JSON special characters in CONTEXT
+    ESCAPED=$(printf '%s' "$CONTEXT" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read())[1:-1])')
     # Output as JSON for Claude Code hook system
-    printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}' "$CONTEXT"
+    printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}' "$ESCAPED"
 else
     printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"No active workflow. Use workflow start <prd-path> to begin."}}'
 fi

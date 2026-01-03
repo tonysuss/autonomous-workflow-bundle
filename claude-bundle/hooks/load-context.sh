@@ -20,7 +20,7 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
 fi
 
 # TODO items from code
-TODOS=$(grep -rn "TODO\|FIXME\|HACK" --include="*.{js,ts,py,go,rs}" . 2>/dev/null | head -10 || true)
+TODOS=$(grep -rn "TODO\|FIXME\|HACK" --include="*.js" --include="*.ts" --include="*.py" --include="*.go" --include="*.rs" . 2>/dev/null | head -10 || true)
 if [ -n "$TODOS" ]; then
     CONTEXT+="\n## TODOs in codebase:\n$TODOS\n"
 fi
@@ -33,5 +33,7 @@ if command -v gh &> /dev/null; then
     fi
 fi
 
+# Escape JSON special characters in CONTEXT
+ESCAPED=$(printf '%s' "$CONTEXT" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read())[1:-1])')
 # Output as JSON
-echo "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"$CONTEXT\"}}"
+echo "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"$ESCAPED\"}}"

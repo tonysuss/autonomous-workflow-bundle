@@ -126,6 +126,7 @@ Enable with: `claude plugins enable <plugin>@claude-plugins-official`
 |----------|----------|---------|---------|
 | `GEMINI_API_KEY` | Optional | Enable AI image generation with `gemini-imagegen` skill | - |
 | `CLAUDE_PROJECT_DIR` | Optional | Override project directory location | Current directory |
+| `WORKFLOW_GATE_MODE` | Optional | Stage gate enforcement: `strict` (block on failure) or `warn` (log only) | `strict` |
 | MCP server vars | Optional | Authentication for enabled MCP servers (e.g., Supabase) | - |
 
 See the [Setup](#setup) section for configuration details.

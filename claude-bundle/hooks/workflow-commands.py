@@ -70,19 +70,20 @@ def save_state(paths, state):
 
 def workflow_start(prd_path, paths):
     """Initialize a new workflow with the given PRD."""
-    # Resolve PRD path
+    # Resolve PRD path - expand ~ and environment variables first
     project_dir = os.environ.get("CLAUDE_PROJECT_DIR", ".")
-    full_prd_path = os.path.join(project_dir, prd_path) if not os.path.isabs(prd_path) else prd_path
+    expanded_path = os.path.expanduser(os.path.expandvars(prd_path))
+    full_prd_path = os.path.join(project_dir, expanded_path) if not os.path.isabs(expanded_path) else expanded_path
 
     if not os.path.exists(full_prd_path):
         return {
-            "error": f"PRD file not found: {prd_path}",
+            "error": f"PRD file not found: {prd_path} (expanded: {full_prd_path})",
             "action": "none"
         }
 
     state = {
         "workflow_id": str(uuid.uuid4()),
-        "prd_path": prd_path,
+        "prd_path": full_prd_path,  # Store the fully expanded/resolved path
         "current_stage": "prd_analysis",
         "stage_status": {
             "prd_analysis": "in_progress",
