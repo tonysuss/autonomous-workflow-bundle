@@ -57,14 +57,4 @@ try:
 except Exception:
     pass
 
-# Output checkpoint info
-output = {
-    "hookSpecificOutput": {
-        "hookEventName": "Stop",
-        "checkpointCreated": checkpoint_file,
-        "canResume": True
-    }
-}
-print(json.dumps(output))
-
 sys.exit(0)
