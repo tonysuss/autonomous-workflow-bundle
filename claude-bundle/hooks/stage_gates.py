@@ -65,7 +65,7 @@ def normalize_path(path):
 
 
 def gate_impl_to_testing(project_dir):
-    """Stage 4 -> 5: 80% of planned files created or modified."""
+    """Stage 4 -> 5: 100% of planned files created or modified."""
     plan_file = os.path.join(project_dir, ".claude/implementation-plan.json")
     state_file = os.path.join(project_dir, ".claude/workflow-state.json")
 
@@ -112,7 +112,7 @@ def gate_impl_to_testing(project_dir):
 
     percentage = (matched / len(planned_paths)) * 100 if planned_paths else 100
 
-    if percentage < 80:
+    if percentage < 100:
         return False, f"Only {percentage:.0f}% of planned files completed ({matched}/{len(planned_paths)})"
 
     return True, f"{percentage:.0f}% of planned files completed ({matched} created/modified)"

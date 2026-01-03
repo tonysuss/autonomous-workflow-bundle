@@ -77,7 +77,7 @@ When `.claude/implementation-plan.json` is created with task graph.
 When security-auditor AND legal-reviewer both approve.
 
 ### Stage 4 → Stage 5
-When 80% of planned files are created or modified (normalized path matching).
+When 100% of planned files are created or modified (normalized path matching).
 
 ### Stage 5 → Stage 6
 When both test-runner-fixer AND acceptance-validator succeed, validation-report.json exists, all tests pass, and 80% coverage threshold is met.
