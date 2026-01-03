@@ -6,10 +6,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/load-context.sh"
-          },
-          {
-            "type": "command",
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/workflow-state-loader.sh"
           }
         ]
@@ -108,10 +104,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/quality-gate.sh"
-          },
-          {
-            "type": "command",
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/workflow-checkpoint.py"
           }
         ]
@@ -120,5 +112,11 @@
   },
   "env": {
     "GEMINI_API_KEY": "your_gemini_api_key"
+  },
+  "permissions": { 
+    "allow": [  
+      "Skill(ralph-wiggum:*)",
+      "Bash(__NEW_LINE__ **/plugins/**/ralph-wiggum/**:*)"
+    ]
   }
 }

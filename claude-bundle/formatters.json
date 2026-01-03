@@ -1,0 +1,33 @@
+{
+  "enabled": false,
+  "formatters": {
+    ".py": [
+      "black \"{file}\"",
+      "isort \"{file}\""
+    ],
+    ".js": [
+      "prettier --write \"{file}\""
+    ],
+    ".ts": [
+      "prettier --write \"{file}\""
+    ],
+    ".jsx": [
+      "prettier --write \"{file}\""
+    ],
+    ".tsx": [
+      "prettier --write \"{file}\""
+    ],
+    ".json": [
+      "prettier --write \"{file}\""
+    ],
+    ".md": [
+      "prettier --write \"{file}\""
+    ],
+    ".go": [
+      "gofmt -w \"{file}\""
+    ],
+    ".java": [
+      "google-java-format -i \"{file}\""
+    ]
+  }
+}

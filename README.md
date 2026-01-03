@@ -17,12 +17,12 @@
 
 ---
 
-A complete `.claude` configuration bundle that transforms Claude Code into a **fully autonomous software development agent**. Drop it into any project to enable **continuous, unattended PRD-to-implementation workflows** that run around the clock with built-in security gates, quality checks, and multi-stage orchestration.
+A complete `.claude` configuration bundle that transforms Claude Code into a **fully autonomous software development agent**. Drop it into any project to enable **continuous, unattended PRD-to-implementation workflows** that run around the clock with built-in security gates, optional quality checks, and multi-stage orchestration.
 
 ## Why Autonomous Claude Workflow Bundle?
 
 - **🔄 True 24/7 Autonomy** - Start a workflow and let it run continuously until completion (or token limits). No manual intervention required.
-- **🏗️ Production-Grade Quality** - Multi-stage validation with security audits, legal reviews, automated testing, and code quality gates at every step.
+- **🏗️ Production-Grade Quality** - Multi-stage validation with security audits, legal reviews, and optional project-specific checks.
 - **🛡️ Built-in Safety** - Automatic checkpointing, rollback capabilities, and file protection ensure safe, resumable execution.
 - **📊 Long-Running Workflows** - Designed for complex, multi-day projects with persistent state management and progress tracking.
 - **🎯 PRD-Driven Development** - Feed in requirements, get production-ready code with complete documentation and tests.
@@ -68,6 +68,7 @@ nano .claude/settings.local.json
 - `claude-bundle/agents` — stage playbooks
 - `claude-bundle/hooks` — routing/commands/validation/checkpoints
 - `claude-bundle/skills` — project skills + bundled globals (`ios-simulator-skill`, `webapp-testing`, `frontend-design`, `web-artifacts-builder`, `gemini-imagegen`)
+- `claude-bundle/formatters.json` — optional formatter mapping (disabled by default)
 - `claude-bundle/settings.json` — hook wiring
 - `claude-bundle/settings.local.json` — local permissions template
 - `claude-bundle/workflow-state.json` — sanitized for a fresh start
@@ -114,7 +115,7 @@ Enable with: `claude plugins enable <plugin>@claude-plugins-official`
 
 ### System Requirements
 
-- **Node.js & npm** - For code formatting and test hooks
+- **Node.js & npm** - Optional, for project-specific testing or formatting hooks
 - **Python 3.9+** - For workflow hooks and scripts
 - **Xcode** (macOS only) - For iOS simulator workflows
 - **Git** - For version control integration
@@ -146,6 +147,21 @@ See the [Setup](#setup) section for configuration details.
 4. Check status: `workflow status`. Resume: `workflow resume`. Stage transitions occur on agent completions via `subagent-result-processor.py`.
 5. Fully autonomous loop (optional): `/ralph-loop Start autonomous workflow with PRD at <path>` if you have the `ralph-wiggum` plugin enabled. The hook extracts the path that follows `PRD at` and forwards it to `workflow start`.
 
+## Optional Formatting
+Formatting is disabled by default. To enable, update `.claude/formatters.json`:
+
+```json
+{
+  "enabled": true,
+  "formatters": {
+    ".js": ["prettier --write \"{file}\""],
+    ".py": ["black \"{file}\"", "isort \"{file}\""]
+  }
+}
+```
+
+The `format-code.sh` hook only runs when `formatters.json` exists and `enabled` is true.
+
 ## Artifacts produced
 During workflow execution, the following files are created in your project's `.claude/`:
 - `requirements.json` — parsed PRD with features and acceptance criteria (after PRD Analysis)
@@ -159,6 +175,7 @@ During workflow execution, the following files are created in your project's `.c
 - If plugins/MCP servers aren't available on the target machine, disable the entries in `settings.local.json`/`settings.json` and proceed without them.
 - Security/legal gate: Stage 3 only advances after both `security-auditor` and `legal-reviewer` succeed.
 - Project files are generated in your project root (outside `.claude`). The bundle guards against writing application code into `.claude`, which is reserved for workflow state and settings.
+- Lightweight default: `load-context.sh` is not enabled by default; add it back to `settings.json` if you want session-start context enrichment.
 
 ## Troubleshooting
 
